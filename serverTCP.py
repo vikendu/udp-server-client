@@ -4,30 +4,34 @@ import threading
   
 print_lock = threading.Lock() 
 def threaded(c): 
+    data = ''
+    buf = b''
     while True: 
-        data = c.recvfrom(1024) 
+        data = str(c.recv(1024).decode('ascii')) 
         if not data: 
             print('Bye') 
             print_lock.release() 
             break
-  
-        # reverse the given string from client 
-        data = data[::-1] 
+        num = int(data)
+        num *= num
+        data = str(num)
+        #buf += data
+        #data = data[::-1] 
 
-        c.send(data) 
+        c.send(data.encode('ascii')) 
   
     # connection closed 
     c.close() 
   
   
 def Main(): 
-    host = "127.0.0.1" 
-    port = 12346
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
+    host = "" 
+    port = 12358
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
     s.bind((host, port)) 
     print("socket binded to post", port) 
   
-    #s.listen(5) 
+    s.listen(5) 
     print("socket is listening") 
    
     while True: 

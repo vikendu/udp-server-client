@@ -2,12 +2,15 @@ import socket
 def Main(): 
     host = '127.0.0.1'
   
-    port = 12346
+    port = 12358
   
-    s = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) 
+    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
     s.connect((host,port)) 
+
+    num = 4
+    sep = ''
   
-    message = "Hello from the Client's Side!"
+    message = str(num)
     while True: 
   
         # message sent to server 
